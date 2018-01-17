@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/time-entries")
 public class TimeEntryController {
 
     private TimeEntryRepository timeEntryRepository;
@@ -17,13 +18,13 @@ public class TimeEntryController {
         this.timeEntryRepository = timeEntryRepository;
     }
 
-    @PostMapping("/time-entries")
+    @PostMapping
     public ResponseEntity create(@RequestBody TimeEntry timeEntry) {
         timeEntry = timeEntryRepository.create(timeEntry);
         return ResponseEntity.status(HttpStatus.CREATED).body(timeEntry);
     }
 
-    @GetMapping("/time-entries/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TimeEntry> read(@PathVariable long id) {
         TimeEntry timeEntry = timeEntryRepository.find(id);
 
@@ -34,12 +35,12 @@ public class TimeEntryController {
         }
     }
 
-    @GetMapping("/time-entries")
+    @GetMapping
     public ResponseEntity<List<TimeEntry>> list() {
         return ResponseEntity.ok(timeEntryRepository.list());
     }
 
-    @PutMapping("/time-entries/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable long id, @RequestBody TimeEntry timeEntry) {
         TimeEntry updatedTimeEntry = timeEntryRepository.update(id, timeEntry);
 
@@ -50,7 +51,7 @@ public class TimeEntryController {
         }
     }
 
-    @DeleteMapping("/time-entries/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<TimeEntry> delete(@PathVariable long id) {
         timeEntryRepository.delete(id);
         return ResponseEntity.noContent().build();
